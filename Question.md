@@ -1,8 +1,8 @@
-# URL
+# Url
 
 https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset?resource=download
 
-# TABLE
+# Table
 
 uniq_id  
 product_name  
@@ -19,7 +19,7 @@ product_description
 items_customers_buy_after_viewing_this_item  
 customer_questions_and_answers  
 
-# Questions de base de donnée:
+# Questions
 
 * % de prod par manufactureur
 * médiane des review
