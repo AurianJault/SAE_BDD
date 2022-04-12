@@ -1,3 +1,9 @@
+#URL
+
+https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset?resource=download
+
+#TABLE
+
 uniq_id
 product_name
 manufacturer
@@ -15,14 +21,14 @@ customer_questions_and_answers
 
 # Questions de base de donnée:
 
-- ## % de prod par manufactureur
-- ## médiane des review
-- ## Pourcentage des reviews 
-    - ### Par tranche de note
-    - ### Par manufactureur
-    - ### Par catégorie
-- ## Proba qu'un client achète apres avoir vu la review
-- ## % d'article avec dans la desc "Best"
-- ## Stats relation entre vente et reponse aux questions
-- ## prix max/min par catégories
-- ## prix max/min par manufactureurs
+* % de prod par manufactureur
+* médiane des review
+* Pourcentage des reviews 
+    * Par tranche de note
+    * Par manufactureur
+    * Par catégorie
+* Proba qu'un client achète apres avoir vu la review
+* % d'article avec dans la desc "Best"
+* Stats relation entre vente et reponse aux questions
+* prix max/min par catégories
+* prix max/min par manufactureurs
