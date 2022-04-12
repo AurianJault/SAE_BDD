@@ -1,8 +1,10 @@
-# Url
+# SAE2.04 : Exploitation d'une base de donnée
+
+## Url
 
 https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset?resource=download
 
-# Table
+## Table
 
 uniq_id  
 product_name  
@@ -19,7 +21,7 @@ product_description
 items_customers_buy_after_viewing_this_item  
 customer_questions_and_answers  
 
-# Questions
+## Questions
 
 * % de prod par manufactureur
 * médiane des review
