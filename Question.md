@@ -1,8 +1,8 @@
-#URL
+# URL
 
 https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset?resource=download
 
-#TABLE
+# TABLE
 
 uniq_id  
 product_name  
