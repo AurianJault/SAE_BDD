@@ -3,7 +3,7 @@ import psycopg2 as psy
 import getpass
 import matplotlib.pyplot as plt
 
-data = pd.read_csv(r'Source/amazon.csv')
+data = pd.read_csv(r'amazon.csv')
 df = pd.DataFrame(data)
 df2 = df.drop_duplicates()
 print(df)
