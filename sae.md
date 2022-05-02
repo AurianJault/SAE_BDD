@@ -7,6 +7,8 @@ mdp : haha
 
 ## Table
 
+### amazon
+
 uniq_id  
 product_name  
 manufacturer  
@@ -20,16 +22,38 @@ description
 product_information  
 product_description  
 items_customers_buy_after_viewing_this_item  
-customer_questions_and_answers  
+customer_questions_and_answers 
+
+### detail
+
+id
+
+weight
+
+hauteur
+
+largeur
+
+profondeur
+
+assemblage
+
+battery_Included
+
+battery_needed
+
+recommended_age
+
+language
 
 ## Questions
 
 * % de prod par manufactureur
 * médiane des review
 * Pourcentage des reviews 
-    * Par tranche de note
-    * Par manufactureur
-    * Par catégorie
+  * Par tranche de note
+  * Par manufactureur
+  * Par catégorie
 * Proba qu'un client achète apres avoir vu la review
 * % d'article avec dans la desc "Best"
 * Stats relation entre vente et reponse aux questions
