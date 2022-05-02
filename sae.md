@@ -1,8 +1,9 @@
 # SAE2.04 : Exploitation d'une base de donnée
 
-## Url
+## Info
 
 https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset?resource=download
+mdp : haha
 
 ## Table
 
