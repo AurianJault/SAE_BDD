@@ -59,3 +59,13 @@ language
 * Stats relation entre vente et reponse aux questions
 * prix max/min par catégories
 * prix max/min par manufactureurs
+
+
+## Stats :
+manufacturer :
+2% lego
+2% disney
+Autre
+
+51 % 5/5 étoiles
+

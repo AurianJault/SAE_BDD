@@ -18,23 +18,34 @@ try:
     curs=co.cursor()
     curs.execute('''DROP TABLE IF EXISTS amazon ;''')
     curs.execute('''CREATE TABLE amazon (
-                uniq_id varchar(150) ,
-                product_name varchar(30) ,
-                manufacturer numeric(4) ,
-                price varchar(100),
-                -- number_available_in_stock varchar(100), A FAIRE DE CHANGEMENTS
-                number_of_reviews numeric,
-                number_of_answered_questions numeric,
-                average_review_rating numeric,
-                amazon_category_and_sub_category numeric,
-                description numeric,
+                uniq_id char(32),
+                product_name varchar(300) ,
+                manufacturer varchar(100),
+                -- price numeric(5,2),  ENELVER LE SIGNE £
+                -- number_available_in_stock varchar(100), ENLEVER LE "new" dans chacunes des lignes
+                number_of_reviews numeric(3),
+                number_of_answered_questions numeric(2),
+                -- average_review_rating numeric(2,1) ENLEVER LES CARACTERES,
+                amazon_category_and_sub_category varachar(500),
+                -- ENELEVER COLONNE 10 DESCRIPTION
                 -- product_information A FAIRE UNE TABLE AVEC
-                -- product_description A SUPPRIMER ON LA DEUX FOIS               
+                -- product_description A SUPPRIMER ON LA DEUX FOIS
                 );''')
+    curs.execute('''CREATE TABLE detail (
+                    -- id char(), A CREER
+                    weight numeric(5,2),
+                    height numeric(5,2),
+                    depth numeric(5,2),
+                    assembly bool,
+                    battery_included bool,
+                    battery_needed bool,
+                    recommended_age numeric(3),
+                    langage varchar(30),
+                );''')                
 
     for row in df2.itertuples():
-        curs. execute ('''INSERT INTO venteJeux VALUES (%s ,%s ,%s ,%s,%s ,%s ,%s ,%s,%s ,%s);''',
-            (row.Name , row.Platform , row.Year , row.Genre, row.Publisher , row.NA_Sales , row.EU_Sales , row.JP_Sales,row.Other_Sales , row.Global_Sales ))
+        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s,%s ,%s ,%s ,%s,%s ,%s,%s);''',
+            (row.uniq_id , row.product_name , row.manufacturer , row.price, row.number_available_in_stock , row.number_of_reviews , row.number_of_answered_questions , row.average_review_rating ,row.amazon_category_and_sub_category, row.product_information, row.product_description ))
 #    curs.execute('''SELECT *
 #                    FROM venteJeux ;''')
 #    curs.execute('''SELECT avg(Global_Sales) v
