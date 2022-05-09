@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 data = pd.read_csv(r'amazon.csv')
 df = pd.DataFrame(data)
-df2 = df.drop_duplicates()
 print(df)
 
 co=None
@@ -17,19 +16,20 @@ try:
         password =getpass.getpass("Enter password"))
 
     curs=co.cursor()
-    curs.execute('''DROP TABLE IF EXISTS venteJeux ;''')
-    curs.execute('''CREATE TABLE venteJeux (
-                Name varchar(150) ,
-                Platform varchar(30) ,
-                Year numeric(4) ,
-                Genre varchar(100),
-                Publisher varchar(100),
-                NA_Sales numeric,
-                EU_Sales numeric,
-                JP_Sales numeric,
-                Other_Sales numeric,
-                Global_Sales numeric,
-                PRIMARY KEY(Name, Platform, Year)
+    curs.execute('''DROP TABLE IF EXISTS amazon ;''')
+    curs.execute('''CREATE TABLE amazon (
+                uniq_id varchar(150) ,
+                product_name varchar(30) ,
+                manufacturer numeric(4) ,
+                price varchar(100),
+                -- number_available_in_stock varchar(100), A FAIRE DE CHANGEMENTS
+                number_of_reviews numeric,
+                number_of_answered_questions numeric,
+                average_review_rating numeric,
+                amazon_category_and_sub_category numeric,
+                description numeric,
+                -- product_information A FAIRE UNE TABLE AVEC
+                -- product_description A SUPPRIMER ON LA DEUX FOIS               
                 );''')
 
     for row in df2.itertuples():
