@@ -44,71 +44,8 @@ try:
                 );''')                
 
     for row in df2.itertuples():
-        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s,%s ,%s ,%s ,%s,%s ,%s,%s);''',
-            (row.uniq_id , row.product_name , row.manufacturer , row.price, row.number_available_in_stock , row.number_of_reviews , row.number_of_answered_questions , row.average_review_rating ,row.amazon_category_and_sub_category, row.product_information, row.product_description ))
-#    curs.execute('''SELECT *
-#                    FROM venteJeux ;''')
-#    curs.execute('''SELECT avg(Global_Sales) v
-#                    FROM venteJeux
-#                    WHERE Genre='Adventure'
-#                    GROUP BY Year;''')
-#
-#    val=curs.fetchall()
-#    print(val)
-#    datafr = pd. read_sql ('''SELECT avg(Global_Sales) v, Year
-#                    FROM venteJeux
-#                    WHERE Genre='Adventure'
-#                    GROUP BY Year;''', con= co )
-#    fig=datafr.plot(x='year', y='v')
-#    plt.show()
-#    dataf = pd. read_sql ('''SELECT sum(Global_Sales) v, Year
-#                    FROM venteJeux
-#                    WHERE Genre='Adventure'
-#                    GROUP BY Year;''', con= co )
-#    fig=dataf.plot(x='year', y='v')
-#    plt.show()
-#    data= pd. read_sql ('''SELECT sum(Global_Sales) v, Year
-#                  FROM venteJeux
-#                  GROUP BY Year
-#                  ORDER BY Year;''', con= co )
-#    fig=data.plot(x='year', y='v')
-#    plt.show()
-#   co.commit()
-#   curs.close()
-# Partie 3
-#1-
-
-    datafr = pd. read_sql ('''SELECT sum(Eu_Sales) v, Platform
-                            FROM venteJeux
-                            GROUP BY Platform;''', con= co)
-    fig = datafr .plot(x='platform', y='v',legend = False )
-    fig. set_xlabel ('plateforme')
-    fig. set_ylabel ('Vente en millions')
-    fig. set_ylim (0 ,300)
-
-    datafr = pd. read_sql ('''SELECT sum(Eu_Sales) v, Platform
-                            FROM venteJeux
-                            GROUP BY Platform;''', con= co)
-    fig = datafr .plot(x='platform', y='v',legend = False, kind='bar')
-    fig. set_xlabel ('plateforme')
-    fig. set_ylabel ('Vente en millions')
-    fig. set_ylim (0 ,300)
-    plt.show () 
-
-    datafr1 = pd. read_sql ('''SELECT sum(NA_Sales) n,sum(Eu_Sales) e,sum(JP_Sales) j,sum(Other_Sales) o, Platform
-                            FROM venteJeux
-                            GROUP BY Platform;''', con= co)
-    fig = datafr1.plot(x='platform', y=[ 'n', 'e', 'j','o'],style =['o-','x--','s:','x-'],legend = False)
-
-    datafr1 = pd. read_sql ('''SELECT sum(NA_Sales) n,sum(Eu_Sales) e,sum(JP_Sales) j,sum(Other_Sales) o, Platform
-                            FROM venteJeux
-                            GROUP BY Platform;''', con= co)
-    fig = datafr1.plot(x='platform', y=[ 'n', 'e', 'j','o'],style =['o-','x--','s:','x-'],legend = False, kind='bar')
-    plt.show () 
-
-
-#4-
-
+        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s,%s ,%s );''',
+            (row.uniq_id , row.product_name , row.manufacturer , row.number_of_reviews , row.number_of_answered_questions ,row.amazon_category_and_sub_category))
 
 
 #Fermeture    
