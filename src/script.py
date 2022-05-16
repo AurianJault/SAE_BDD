@@ -11,7 +11,7 @@ co=None
 try:
     # Connexion à la base
     co=psy.connect(host='berlin',
-        database ='dbbajacqueli',
+        database ='dbsaeabblr',
         user='bajacqueli',
         password =getpass.getpass("Enter password"))
 
