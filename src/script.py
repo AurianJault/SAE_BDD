@@ -3,11 +3,19 @@ import psycopg2 as psy
 import getpass
 import matplotlib.pyplot as plt
 
-data = pd.read_csv(r'amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","description","product_information","product_description","items_customers_buy_after_viewing_this_item","customer_questions_and_answers"] ,low_memory=False)
+data = pd.read_csv(r'src/amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","description","product_information","product_description","items_customers_buy_after_viewing_this_item","customer_questions_and_answers"] ,low_memory=False)
 df = pd.DataFrame(data)
 df2 = df.drop_duplicates().copy()
 
 print(df2)
+
+#cut the £ sign in price column
+var = df2['price'].str.split('£')
+print(var.str[1])
+
+#cut the number_available column to have number and new/used
+var1 = df2['average_review_rating'].str.split(' ')
+print(var1.str[0])
 
 co=None
 try:
@@ -20,8 +28,6 @@ try:
 
 
 # Modif table :
-varible=df["number_available_in_stock"].str.split(' ')
-df['number_available_in_stock']=variable.str.get(0)
 
     curs=co.cursor()
     curs.execute('''DROP TABLE IF EXISTS amazon ;''')
