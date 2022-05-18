@@ -3,7 +3,7 @@ import psycopg2 as psy
 import getpass
 import matplotlib.pyplot as plt
 
-data = pd.read_csv(r'src/amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","description","product_information"] ,low_memory=False)
+data = pd.read_csv(r'src/amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","product_information"] ,low_memory=False)
 df = pd.DataFrame(data)
 df1 = df.drop_duplicates().copy()
 df2 = df1.mask(df1 == '')
@@ -26,7 +26,10 @@ var2 = df2['average_review_rating'].str.split(' ')
 df2['average_review_rating'] = var2.str[0]
 print(var2.str[0])
 
-print(df2.loc[153,:]) 
+print(df2.loc[153,:])
+
+#save cleaned dataframe into csv file
+df2.to_csv("./amazon_clean.csv")
 
 co=None
 try:
@@ -50,12 +53,10 @@ try:
                 number_of_answered_questions numeric(4),
                 average_review_rating numeric(2,1),
                 amazon_category_and_sub_category varchar(500)
-                -- ENELEVER COLONNE 10 DESCRIPTION
                 -- product_information A FAIRE UNE TABLE AVEC
-                -- product_description
                 );''')
     curs.execute('''CREATE TABLE detail (
-                    -- id char(), A CREER
+                    -- id char(),
                     weight numeric(5,2),
                     height numeric(5,2),
                     depth numeric(5,2),
