@@ -63,5 +63,5 @@ Autre
 
 ## Changements
 - [X] price -> cut £ signe
-- [X] number_available_in_stock -> cut en deux partie + ajout d'une colonne
+- [ ] number_available_in_stock -> cut en deux partie + ajout d'une colonne
 - [X] average_review_rating -> cut tout sauf le chiffre
