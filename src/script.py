@@ -7,8 +7,11 @@ data = pd.read_csv(r'amazon.csv',usecols=["uniq_id","product_name","manufacturer
 df = pd.DataFrame(data)
 df2 = df.drop_duplicates().copy()
 
-print(df2)
+var=df2['number_available_in_stock'].str.split()
+df2['number_available_in_stock']=var.str.get(0)
 
+#print(df2)
+print(var.str[0])
 co=None
 try:
     # Connexion à la base
@@ -16,12 +19,6 @@ try:
         database ='dbsaeabblr',
         user='rearnal',
         password ='haha')
-
-
-
-# Modif table :
-varible=df["number_available_in_stock"].str.split(' ')
-df['number_available_in_stock']=variable.str.get(0)
 
     curs=co.cursor()
     curs.execute('''DROP TABLE IF EXISTS amazon ;''')
@@ -54,7 +51,7 @@ df['number_available_in_stock']=variable.str.get(0)
 
     for row in df2.itertuples():
         curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s,%s,%s ,%s );''',
-            (row.uniq_id , row.product_name , row.manufacturer , row.number_of_reviews,row.number_available_in_stock , row.number_of_answered_questions ,row.amazon_category_and_sub_category))
+            (row.uniq_id , row.product_name , row.manufacturer ,row.number_available_in_stock, row.number_of_reviews, row.number_of_answered_questions ,row.amazon_category_and_sub_category))
 
 
 #Fermeture    
