@@ -69,3 +69,7 @@ Autre
 
 51 % 5/5 étoiles
 
+## Changements
+- [X] price -> cut £ signe
+- [X] number_available_in_stock -> cut en deux partie + ajout d'une colonne
+- [X] average_review_rating -> cut tout sauf le chiffre
