@@ -31,14 +31,14 @@ df['number_available_in_stock']=variable.str.get(0)
                 product_name varchar(5000) ,
                 manufacturer varchar(100),
                 -- price numeric(5,2),  ENELVER LE SIGNE £
-                -- number_available_in_stock varchar(100), ENLEVER LE "new" dans chacunes des lignes
+                number_available_in_stock numeric, -- ENLEVER LE "new" dans chacunes des lignes
                 number_of_reviews varchar(100),
                 number_of_answered_questions varchar(100),
                 -- average_review_rating numeric(2,1) ENLEVER LES CARACTERES,
                 amazon_category_and_sub_category varchar(500)
                 -- ENELEVER COLONNE 10 DESCRIPTION
                 -- product_information A FAIRE UNE TABLE AVEC
-                -- product_description A SUPPRIMER ON LA DEUX FOIS
+                -- product_description
                 );''')
     curs.execute('''CREATE TABLE detail (
                     -- id char(), A CREER
@@ -53,8 +53,8 @@ df['number_available_in_stock']=variable.str.get(0)
                 );''')                
 
     for row in df2.itertuples():
-        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s,%s ,%s );''',
-            (row.uniq_id , row.product_name , row.manufacturer , row.number_of_reviews , row.number_of_answered_questions ,row.amazon_category_and_sub_category))
+        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s,%s,%s ,%s );''',
+            (row.uniq_id , row.product_name , row.manufacturer , row.number_of_reviews,row.number_available_in_stock , row.number_of_answered_questions ,row.amazon_category_and_sub_category))
 
 
 #Fermeture    
