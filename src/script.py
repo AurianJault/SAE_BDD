@@ -13,23 +13,57 @@ df2 = df1.mask(df1 == '')
 var=df2['number_available_in_stock'].str.split()
 df2['number_available_in_stock']=var.str.get(0)
 df2['stock_status']=var.str.get(1)
-print(var.str[0])
-print(var.str[1])
+# print(var.str[0])
+# print(var.str[1])
 
 #cut the £ sign in price column
 var1a = df2['price'].str.replace('-','£').replace(' ','£')
 var1 = var1a.str.split('£')
 df2['price']=var1.str[1]
-print(var1.str[1])
+# print(var1.str[1])
 
 #cut tout sauf le nombre
 var2 = df2['average_review_rating'].str.split(' ')
 df2['average_review_rating'] = var2.str[0]
-print(var2.str[0])
+# print(var2.str[0])
 
-print(df2.loc[0,:]) 
+# print(df2.loc[0,:]) 
 
-print(df2.loc[153,:]) 
+# print(df2.loc[153,:]) 
+
+# cut poids 
+varPoid=df2['product_information'].str.split('Weight')
+varPoid=varPoid.str.get(1)
+varPoid=varPoid.str.split()
+varPoid=varPoid.str.get(0)+varPoid.str.get(1)
+# print(varPoid)
+
+# Cut dimension
+# convention longueur X largeur X Hauteur
+vardim=df2['product_information'].str.split('Product Dimensions')
+vardim=vardim.str.get(1)
+vardim=vardim.str.split()
+vardim=vardim.str.get(0)+vardim.str.get(1)+vardim.str.get(2)+vardim.str.get(3)+vardim.str.get(4)+vardim.str.get(5)
+# print(vardim)
+
+#Cut Age
+varage=df2['product_information'].str.split('recommended age')
+varage=varage.str.get(1)
+varage=varage.str.split()
+varage=varage.str.get(0)
+print(varage)
+
+#cut batterie
+varbat=df2['product_information'].str.split('Batteries Included\?')
+varbat=varbat.str.get(1)
+varbat=varbat.str.split()
+varbat=varbat.str.get(0)
+print(varbat)
+
+
+# cut batteries included
+
+var2bat
 
 
 co=None
@@ -80,7 +114,6 @@ try:
     curs.close()
 except (Exception , psy.DatabaseError) as error:
     print(error)
-
 finally:
     if co is not None:
         co.close()
