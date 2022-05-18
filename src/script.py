@@ -3,11 +3,33 @@ import psycopg2 as psy
 import getpass
 import matplotlib.pyplot as plt
 
-data = pd.read_csv(r'amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","description","product_information","product_description","items_customers_buy_after_viewing_this_item","customer_questions_and_answers"] ,low_memory=False)
+data = pd.read_csv(r'src/amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","description","product_information"] ,low_memory=False)
 df = pd.DataFrame(data)
-df2 = df.drop_duplicates().copy()
+df1 = df.drop_duplicates().copy()
+df2 = df1.mask(df1 == '')
 
+<<<<<<< HEAD
 
+=======
+#cut the number_available column to have number and new/used
+var=df2['number_available_in_stock'].str.split()
+df2['number_available_in_stock']=var.str.get(0)
+print(var.str[0])
+print(var.str[1])
+
+#cut the £ sign in price column
+var1a = df2['price'].str.replace('-','£').replace(' ','£')
+var1 = var1a.str.split('£')
+df2['price']=var1.str[1]
+print(var1.str[1])
+
+#cut tout sauf le nombre
+var2 = df2['average_review_rating'].str.split(' ')
+df2['average_review_rating'] = var2.str[0]
+print(var2.str[0])
+
+print(df2.loc[0,:]) 
+>>>>>>> ce6ecdcdb8cf82ba4513f1907ba0d0b3cde95368
 
 co=None
 try:
@@ -24,11 +46,11 @@ try:
                 uniq_id char(32),
                 product_name varchar(5000) ,
                 manufacturer varchar(100),
-                -- price numeric(5,2),  ENELVER LE SIGNE £
-                number_available_in_stock numeric, -- ENLEVER LE "new" dans chacunes des lignes
-                number_of_reviews varchar(100),
-                number_of_answered_questions varchar(100),
-                -- average_review_rating numeric(2,1) ENLEVER LES CARACTERES,
+                price numeric(5,2),
+                number_available_in_stock numeric,
+                number_of_reviews numeric(4),
+                number_of_answered_questions numeric(4),
+                average_review_rating numeric(2,1),
                 amazon_category_and_sub_category varchar(500)
                 -- ENELEVER COLONNE 10 DESCRIPTION
                 -- product_information A FAIRE UNE TABLE AVEC
@@ -47,8 +69,8 @@ try:
                 );''')                
 
     for row in df2.itertuples():
-        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s,%s,%s ,%s );''',
-            (row.uniq_id , row.product_name , row.manufacturer ,row.number_available_in_stock, row.number_of_reviews, row.number_of_answered_questions ,row.amazon_category_and_sub_category))
+        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
+            (row.uniq_id ,row.product_name ,row.manufacturer ,row.price ,row.number_available_in_stock , row.number_of_reviews, row.number_of_answered_questions ,row.average_review_rating ,row.amazon_category_and_sub_category))
 
 
 #Fermeture    
