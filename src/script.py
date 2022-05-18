@@ -7,11 +7,8 @@ data = pd.read_csv(r'amazon.csv',usecols=["uniq_id","product_name","manufacturer
 df = pd.DataFrame(data)
 df2 = df.drop_duplicates().copy()
 
-var=df2['number_available_in_stock'].str.split()
-df2['number_available_in_stock']=var.str.get(0)
 
-#print(df2)
-print(var.str[0])
+
 co=None
 try:
     # Connexion à la base
