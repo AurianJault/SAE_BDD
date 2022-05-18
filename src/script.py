@@ -47,7 +47,7 @@ vardim=vardim.str.get(0)+vardim.str.get(1)+vardim.str.get(2)+vardim.str.get(3)+v
 # print(vardim)
 
 #Cut Age
-varage=df2['product_information'].str.split('recommended age')
+varage=df2['product_information'].str.split('recommended age:')
 varage=varage.str.get(1)
 varage=varage.str.split()
 varage=varage.str.get(0)
@@ -58,13 +58,43 @@ varbat=df2['product_information'].str.split('Batteries Included\?')
 varbat=varbat.str.get(1)
 varbat=varbat.str.split()
 varbat=varbat.str.get(0)
-print(varbat)
+# print(varbat)
 
 
 # cut batteries included
 
-var2bat
+var2bat=df2['product_information'].str.split('Batteries Required\?')
+var2bat=var2bat.str.get(1)
+var2bat=var2bat.str.split()
+var2bat=var2bat.str.get(0)
+# print(var2bat)
 
+# Cut Assembly Required
+
+varass=df2['product_information'].str.split('Assembly Required')
+varass=varass.str.get(1)
+varass=varass.str.split()
+varass=varass.str.get(0)
+
+
+# print(varass)
+
+# control included
+varrem=df2['product_information'].str.split('Remote Control Included\?')
+varrem=varrem.str.get(1)
+varrem=varrem.str.split()
+varrem=varrem.str.get(0)
+
+# print(varrem)
+
+# Cut First Date
+
+vardat=df2['product_information'].str.split('Date First Available')
+vardat=vardat.str.get(1)
+vardat=vardat.str.split()
+vardat=vardat.str.get(0)+" "+vardat.str.get(1)+" "+vardat.str.get(2)
+
+# print(vardat)
 
 co=None
 try:
