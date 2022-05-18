@@ -8,12 +8,11 @@ df = pd.DataFrame(data)
 df1 = df.drop_duplicates().copy()
 df2 = df1.mask(df1 == '')
 
-<<<<<<< HEAD
 
-=======
 #cut the number_available column to have number and new/used
 var=df2['number_available_in_stock'].str.split()
 df2['number_available_in_stock']=var.str.get(0)
+df2['stock_status']=var.str.get(1)
 print(var.str[0])
 print(var.str[1])
 
@@ -29,7 +28,9 @@ df2['average_review_rating'] = var2.str[0]
 print(var2.str[0])
 
 print(df2.loc[0,:]) 
->>>>>>> ce6ecdcdb8cf82ba4513f1907ba0d0b3cde95368
+
+print(df2.loc[153,:]) 
+
 
 co=None
 try:
@@ -46,8 +47,9 @@ try:
                 uniq_id char(32),
                 product_name varchar(5000) ,
                 manufacturer varchar(100),
-                price numeric(5,2),
+                price numeric(6,2),
                 number_available_in_stock numeric,
+                stock_status varchar(30),
                 number_of_reviews numeric(4),
                 number_of_answered_questions numeric(4),
                 average_review_rating numeric(2,1),
@@ -69,8 +71,8 @@ try:
                 );''')                
 
     for row in df2.itertuples():
-        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
-            (row.uniq_id ,row.product_name ,row.manufacturer ,row.price ,row.number_available_in_stock , row.number_of_reviews, row.number_of_answered_questions ,row.average_review_rating ,row.amazon_category_and_sub_category))
+        curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
+            (row.uniq_id ,row.product_name ,row.manufacturer ,row.price ,row.number_available_in_stock ,row.stock_status, row.number_of_reviews, row.number_of_answered_questions ,row.average_review_rating ,row.amazon_category_and_sub_category))
 
 
 #Fermeture    
