@@ -17,6 +17,12 @@ try:
         user='rearnal',
         password ='haha')
 
+
+
+# Modif table :
+varible=df["number_available_in_stock"].str.split(' ')
+df['number_available_in_stock']=variable.str.get(0)
+
     curs=co.cursor()
     curs.execute('''DROP TABLE IF EXISTS amazon ;''')
     curs.execute('''DROP TABLE IF EXISTS detail ;''')
