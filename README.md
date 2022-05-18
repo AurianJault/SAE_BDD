@@ -2,8 +2,9 @@
 
 ## Info
 
-https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset?resource=download
-mdp : haha
+Lien du csv : https://www.kaggle.com/datasets/nguyenngocphung/10000-amazon-products-dataset?resource=download  
+Lien du doc : https://docs.google.com/document/d/13Vzunw1td49xJpwJos_GKfYhAmUG6cgKVLPSLH-zLqw/edit?usp=sharing
+mdp de la bdd : haha  
 
 ## Table
 
@@ -27,23 +28,14 @@ customer_questions_and_answers
 ### detail
 
 id
-
 weight
-
 hauteur
-
 largeur
-
 profondeur
-
 assemblage
-
 battery_Included
-
 battery_needed
-
 recommended_age
-
 language
 
 ## Questions
@@ -69,6 +61,7 @@ Autre
 
 51 % 5/5 étoiles
 
----
-
-# Rapport
+## Changements
+- [X] price -> cut £ signe
+- [ ] number_available_in_stock -> cut en deux partie + ajout d'une colonne
+- [X] average_review_rating -> cut tout sauf le chiffre
