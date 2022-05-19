@@ -12,65 +12,44 @@ try:
         password ='haha')
 
     curs=co.cursor()
+
+
+
     #nb prod par manufacturer
     okkkk= pd.read_sql('''
     SELECT manufacturer, count(*) as produits
     FROM amazon
     GROUP BY manufacturer;
     ''',con=co)
-    fig = okkkk.plot(x='manufacturer', y='produits') #Generation du graphique
-    plt.show () #Affichage
+    #print(okkkk)
+    # fig1 = okkkk.plot(x='manufacturer', y='produits', kind='bar') #Generation du graphique
+    # plt.show () #Affichage
+
+
+
 
     #Nb review by category
     reviewCategori= pd.read_sql('''
-    SELECT count(number_of_reviews) as rev
+    SELECT count(number_of_reviews) as rev 
     FROM amazon
     GROUP BY amazon_category_and_sub_category
     ''',con=co)
     #print(reviewCategori)
-    fig = okkkk.plot(x='amazon_category_and_sub_category', y='rev') #Generation du graphique
-    plt.show () #Affichage
-
-    
-    # fig = reviewCategori.plot(x='amazon_category_and_sub_category', y='produits') #Generation du graphique
+    # fig2 = reviewCategori.plot(x='amazon_category_and_sub_category', y='produits', kind='bar') #Generation du graphique
     # plt.show () #Affichage
 
-    #print(okkkk)
-
-    #Moyenne de produits par manufacturer
-    # moyProdPMan= pd.read_sql('''
-
-    # SELECT count(*) as produits
-    # FROM amazon
-    # GROUP BY manufacturer;
-    # DO $$
-    #     DECLARE
-    #         sum_prod numeric ;
-    #         nb_manu numeric ;
-    #         res numeric;
-    #     BEGIN
-    #         SELECT count(*) INTO nb_manu
-    #         FROM (SELECT distinct a.manufacturer
-    #             FROM amazon a)p;
-    #         SELECT count(*) INTO sum_prod
-    #         FROM amazon
-    #         GROUP BY manufacturer;
-    #         res=sum_prod / nb_manu;
-    #         RAISE NOTICE 'La moyenne de produit par manufactureur est %.', res;
-    #     END ;
-    # $$ ;
-    # ''',con=co)
-    # print(moyProdPMan)
 
 
 
-    #Nb de manufacturer différents
-    curs.execute('''
-    SELECT count(*)
-    FROM (SELECT distinct a.manufacturer
-        FROM amazon a)p;
+    #Avg Price by category 
+    priceCat=curs.execute('''
+    SELECT max(price) maxi, avg(price) avrg, min(price) mini
+    FROM amazon
+    GROUP BY amazon_category_and_sub_category
     ''')
-
+    print(priceCat)
+    # fig3 = reviewCategori.plot(x='amazon_category_and_sub_category', y=['avrg', 'mini', 'maxi'],style =['o-','x--','s:']) #Generation du graphique
+    # plt.show () #Affichage
 
 #Fermeture    
     #co.commit()
