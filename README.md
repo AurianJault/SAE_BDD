@@ -9,7 +9,6 @@ mdp de la bdd : haha
 ## Table
 
 ### amazon
-
 uniq_id  
 product_name  
 manufacturer  
@@ -19,27 +18,19 @@ number_of_reviews
 number_of_answered_questions  
 average_review_rating  
 amazon_category_and_sub_category  
-description  
 product_information  
-product_description  
-items_customers_buy_after_viewing_this_item  
-customer_questions_and_answers 
 
 ### detail
-
-id
-weight
-hauteur
-largeur
-profondeur
-assemblage
-battery_Included
-battery_needed
-recommended_age
-language
+uniq_id
+weight  
+dimension
+assembly   
+battery_included  
+battery_required  
+recommended_age  
+pas fait -> language
 
 ## Questions
-
 * % de prod par manufactureur
 * médiane des review
 * Pourcentage des reviews 
@@ -65,3 +56,8 @@ Autre
 - [X] price -> cut £ signe
 - [X] number_available_in_stock -> cut en deux partie + ajout d'une colonne
 - [X] average_review_rating -> cut tout sauf le chiffre
+- [X] remove 2 weird lines
+- [X] change value were price is >999
+
+## Query
+- Better note if battery is included when required [Rémi]
