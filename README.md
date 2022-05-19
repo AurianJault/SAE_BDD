@@ -60,6 +60,6 @@ Autre
 
 ## Query
 - Better note if battery is included when required [Rémi]
-- Number of products by manufacturer [Bastien]
+- Number of products by manufacturer [Bastien] -> pas ouf
 - Number of review by category [Bastien]
 - avg Price by category [Bastien]
