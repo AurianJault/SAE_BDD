@@ -3,7 +3,7 @@ import psycopg2 as psy
 import getpass
 import matplotlib.pyplot as plt
 
-data = pd.read_csv(r'src/amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","description","product_information"] ,low_memory=False)
+data = pd.read_csv(r'src/amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","product_information"] ,low_memory=False)
 df = pd.DataFrame(data)
 df1 = df.drop_duplicates().copy()
 df2 = df1.mask(df1 == '')
@@ -29,72 +29,68 @@ df2['average_review_rating'] = var2.str[0]
 
 # print(df2.loc[0,:]) 
 
-# print(df2.loc[153,:]) 
+# print(df2.loc[153,:])
 
-# cut poids 
+#--------------------------------------------------------------------------------------------------
+
+### WEIGHT 
 varPoid=df2['product_information'].str.split('Weight')
 varPoid=varPoid.str.get(1)
 varPoid=varPoid.str.split()
 varPoid=varPoid.str.get(0)+varPoid.str.get(1)
-# print(varPoid)
+df2['weight'] = varPoid
 
-# Cut dimension
-# convention longueur X largeur X Hauteur
+### DIMENSIONS
 vardim=df2['product_information'].str.split('Product Dimensions')
 vardim=vardim.str.get(1)
 vardim=vardim.str.split()
 vardim=vardim.str.get(0)+vardim.str.get(1)+vardim.str.get(2)+vardim.str.get(3)+vardim.str.get(4)+vardim.str.get(5)
-# print(vardim)
+df2['dimension'] = vardim
 
-#Cut Age
+### AGE
 varage=df2['product_information'].str.split('recommended age:')
 varage=varage.str.get(1)
 varage=varage.str.split()
 varage=varage.str.get(0)
-print(varage)
+df2['recommended_age'] = varage
 
-#cut batterie
+### BATTERY IN
 varbat=df2['product_information'].str.split('Batteries Included\?')
 varbat=varbat.str.get(1)
 varbat=varbat.str.split()
 varbat=varbat.str.get(0)
-# print(varbat)
+df2['battery_included'] = varbat
 
-
-# cut batteries included
-
+### BATTERY REQUIRED
 var2bat=df2['product_information'].str.split('Batteries Required\?')
 var2bat=var2bat.str.get(1)
 var2bat=var2bat.str.split()
 var2bat=var2bat.str.get(0)
-# print(var2bat)
+df2['battery_required'] = var2bat
 
-# Cut Assembly Required
-
+### ASSEMBLY
 varass=df2['product_information'].str.split('Assembly Required')
 varass=varass.str.get(1)
 varass=varass.str.split()
 varass=varass.str.get(0)
+df2['assembly'] = varass
 
-
-# print(varass)
-
-# control included
+### REMOTE CONTROL
 varrem=df2['product_information'].str.split('Remote Control Included\?')
 varrem=varrem.str.get(1)
 varrem=varrem.str.split()
 varrem=varrem.str.get(0)
+df2['battery_in'] = varrem
 
-# print(varrem)
-
-# Cut First Date
-
+### FIRST DATE
 vardat=df2['product_information'].str.split('Date First Available')
 vardat=vardat.str.get(1)
 vardat=vardat.str.split()
 vardat=vardat.str.get(0)+" "+vardat.str.get(1)+" "+vardat.str.get(2)
+df2['available'] = vardat
 
-# print(vardat)
+# save cleaned dataframe into csv file
+df2.to_csv("./amazon_clean.csv")
 
 co=None
 try:
@@ -118,25 +114,26 @@ try:
                 number_of_answered_questions numeric(4),
                 average_review_rating numeric(2,1),
                 amazon_category_and_sub_category varchar(500)
-                -- ENELEVER COLONNE 10 DESCRIPTION
                 -- product_information A FAIRE UNE TABLE AVEC
-                -- product_description
                 );''')
     curs.execute('''CREATE TABLE detail (
-                    -- id char(), A CREER
-                    weight numeric(5,2),
-                    height numeric(5,2),
-                    depth numeric(5,2),
-                    assembly bool,
-                    battery_included bool,
-                    battery_needed bool,
-                    recommended_age numeric(3),
-                    langage varchar(30)
+                    uniq_id char(32),
+                    weight varchar(10),
+                    dimension varchar(200),
+                    assembly varchar(3),
+                    battery_included varchar(3),
+                    battery_required varchar(3),
+                    recommended_age numeric(3)
+                    -- langage varchar(30)
                 );''')                
 
     for row in df2.itertuples():
         curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
             (row.uniq_id ,row.product_name ,row.manufacturer ,row.price ,row.number_available_in_stock ,row.stock_status, row.number_of_reviews, row.number_of_answered_questions ,row.average_review_rating ,row.amazon_category_and_sub_category))
+
+    for row in df2.itertuples():
+        curs. execute('''INSERT INTO detail VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
+            (row.uniq_id ,row.weight ,row.dimension ,row.assembly ,row.battery_included ,row.battery_required ,row.recommended_age))
 
 
 #Fermeture    
@@ -147,4 +144,3 @@ except (Exception , psy.DatabaseError) as error:
 finally:
     if co is not None:
         co.close()
-
