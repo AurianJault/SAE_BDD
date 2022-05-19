@@ -45,28 +45,28 @@ vardim=df2['product_information'].str.split('Product Dimensions')
 vardim=vardim.str.get(1)
 vardim=vardim.str.split()
 vardim=vardim.str.get(0)+vardim.str.get(1)+vardim.str.get(2)+vardim.str.get(3)+vardim.str.get(4)+vardim.str.get(5)
-df2['dimensions'] = vardim
+df2['dimension'] = vardim
 
 ### AGE
 varage=df2['product_information'].str.split('recommended age:')
 varage=varage.str.get(1)
 varage=varage.str.split()
 varage=varage.str.get(0)
-df2['reco_age'] = varage
+df2['recommended_age'] = varage
 
 ### BATTERY IN
 varbat=df2['product_information'].str.split('Batteries Included\?')
 varbat=varbat.str.get(1)
 varbat=varbat.str.split()
 varbat=varbat.str.get(0)
-df2['battery_in'] = varPoid
+df2['battery_included'] = varbat
 
 ### BATTERY REQUIRED
 var2bat=df2['product_information'].str.split('Batteries Required\?')
 var2bat=var2bat.str.get(1)
 var2bat=var2bat.str.split()
 var2bat=var2bat.str.get(0)
-df2['battery_req'] = var2bat
+df2['battery_required'] = var2bat
 
 ### ASSEMBLY
 varass=df2['product_information'].str.split('Assembly Required')
@@ -117,20 +117,23 @@ try:
                 -- product_information A FAIRE UNE TABLE AVEC
                 );''')
     curs.execute('''CREATE TABLE detail (
-                    -- id char(),
-                    weight numeric(5,2),
-                    height numeric(5,2),
-                    depth numeric(5,2),
-                    assembly bool,
-                    battery_included bool,
-                    battery_needed bool,
-                    recommended_age numeric(3),
-                    langage varchar(30)
+                    uniq_id char(32),
+                    weight varchar(10),
+                    dimension varchar(200),
+                    assembly varchar(3),
+                    battery_included varchar(3),
+                    battery_required varchar(3),
+                    recommended_age numeric(3)
+                    -- langage varchar(30)
                 );''')                
 
     for row in df2.itertuples():
         curs. execute ('''INSERT INTO amazon VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
             (row.uniq_id ,row.product_name ,row.manufacturer ,row.price ,row.number_available_in_stock ,row.stock_status, row.number_of_reviews, row.number_of_answered_questions ,row.average_review_rating ,row.amazon_category_and_sub_category))
+
+    for row in df2.itertuples():
+        curs. execute('''INSERT INTO detail VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
+            (row.uniq_id ,row.weight ,row.dimension ,row.assembly ,row.battery_included ,row.battery_required ,row.recommended_age))
 
 
 #Fermeture    
