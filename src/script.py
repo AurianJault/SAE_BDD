@@ -89,7 +89,7 @@ vardat=vardat.str.split()
 vardat=vardat.str.get(0)+" "+vardat.str.get(1)+" "+vardat.str.get(2)
 df2['available'] = vardat
 
-#save cleaned dataframe into csv file
+# save cleaned dataframe into csv file
 df2.to_csv("./amazon_clean.csv")
 
 co=None
