@@ -25,4 +25,6 @@ WHERE d.weight='NaN' and d.dimension='NaN' and d.assembly='NaN' and d.recommende
 
 SELECT COUNT(a.average_review_rating), ROUND(avg(a.average_review_rating),2) as "note where info GOOD"
 FROM detail d, amazon a
-WHERE d.weight!='NaN' and d.dimension!='NaN' and d.assembly!='NaN' and d.recommended_age!='NaN' and d.uniq_id=a.uniq_id and a.average_review_rating!='NaN';
+WHERE d.weight!='NaN' and d.dimension!='NaN' and d.recommended_age!='NaN' and d.uniq_id=a.uniq_id and a.average_review_rating!='NaN';
+
+SELECT launch_date from detail; 
