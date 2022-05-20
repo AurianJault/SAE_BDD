@@ -51,10 +51,10 @@ try:
     GROUP BY manufacturer
     ORDER BY avg(average_review_rating) desc;
     ''',con=co)
-    # print(okkkk)
-    # fig1 = okkkk.plot(x='manufacturer',y=[ 'produits', 'rat'], style =['o-','x--']) #Generation du graphique
-    # fig1. set_ylim (0,50)
-    # plt.show () #Affichage
+    print(okkkk)
+    fig1 = okkkk.plot(x='manufacturer',y=[ 'produits', 'rat'], style =['o-','x--']) #Generation du graphique
+    fig1. set_ylim (0,50)
+    plt.show () #Affichage
 
 
 
@@ -68,10 +68,10 @@ try:
     ORDER BY count(number_of_reviews) desc;
 
     ''',con=co)
-    # print(reviewCategori)
-    # fig2 = reviewCategori.plot(x='amazon_category_and_sub_category', y='rev', kind='bar') #Generation du graphique
-    # fig2.set_xlim(0,10)
-    # plt.show () #Affichage
+    print(reviewCategori)
+    fig2 = reviewCategori.plot(x='amazon_category_and_sub_category', y='rev', kind='bar') #Generation du graphique
+    fig2.set_xlim(0,10)
+    plt.show () #Affichage
 
 
 
@@ -86,10 +86,10 @@ try:
 
     ORDER BY avg(average_review_rating) desc;
     ''',con=co)
-    # print(priceCat)
-    # fig3 = priceCat.plot(x='amazon_category_and_sub_category', y='avrg', kind='bar') #Generation du graphique
-    # fig3.set_xlim(142,160)
-    # plt.show () #Affichage
+    print(priceCat)
+    fig3 = priceCat.plot(x='amazon_category_and_sub_category', y='avrg', kind='bar') #Generation du graphique
+    fig3.set_xlim(142,160)
+    plt.show () #Affichage
 
 
     #Avg Price by category 
@@ -99,10 +99,10 @@ try:
     GROUP BY amazon_category_and_sub_category
     --WHERE amazon_category_and_sub_category in ()
     ''',con=co)
-    # print(ratCat)
-    # fig3 = ratCat.plot(x='amazon_category_and_sub_category', y='rat', kind='bar') #Generation du graphique
-    # fig3.set_xlim(0,10)
-    # plt.show () #Affichage
+    print(ratCat)
+    fig3 = ratCat.plot(x='amazon_category_and_sub_category', y='rat', kind='bar') #Generation du graphique
+    fig3.set_xlim(0,10)
+    plt.show () #Affichage
 
     datafr210 = pd.read_sql ('''select a.amazon_category_and_sub_category, d.recommended_age
     from amazon a, detail d
