@@ -104,6 +104,39 @@ try:
     # fig3.set_xlim(0,10)
     # plt.show () #Affichage
 
+ datafr210 = pd.read_sql ('''select a.amazon_category_and_sub_category, d.recommended_age
+    from amazon a, detail d
+    where a.uniq_id=d.uniq_id and recommended_age<=10; ''', con=co)
+    
+    datafr211 = pd.read_sql ('''select avg(average_review_rating)
+    FRom amazon 
+    group by amazon_category_and_sub_category like 'Hobbies > Model Trains & Railway Sets > Rail Vehicles > Trains'; ''', con=co)
+    
+    datafr212 = pd.read_sql ('''select avg(recommended_age) as Moyenne ,max(recommended_age) as Max ,min(recommended_age) as Min
+    from detail where recommended_age !='NaN' and assembly = 'Yes'; ''', con=co)
+
+    datafr213 = pd.read_sql ('''select avg(a.average_review_rating) battery_required, avg(b.average_review_rating) battery_not_required, b.amazon_category_and_sub_category cat
+    from amazon a ,detail d, amazon b, detail e
+    where a.uniq_id=d.uniq_id and d.battery_required like 'Yes' and b.uniq_id=e.uniq_id and e.battery_required like 'No' and a.average_review_rating!='NaN'
+    and b.average_review_rating!='NaN' and b.amazon_category_and_sub_category like 'Hobbies > Model Trains & Railway Sets > Rail Vehicles > Trains' 
+    and a.amazon_category_and_sub_category like 'Hobbies > Model Trains & Railway Sets > Rail Vehicles > Trains'
+    GROUP BY b.amazon_category_and_sub_category; ''', con=co)
+    
+    
+    
+    
+    print(datafr210)
+    print(datafr211)
+    print(datafr212)
+    
+    print(datafr213)
+    
+    fig213=datafr.plot(x='cat' , y=['battery_required','battery_not_required'] ,legend =False,kind='bar')
+    fig213.set_title('Moyennes des note du produit')
+    fig213.set_xlabel('batterie and not')
+    fig213.set_ylabel('Moyenne ')
+    fig213.set_ylim(4,5)
+    plt.show()
 
 
 
