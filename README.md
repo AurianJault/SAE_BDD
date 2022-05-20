@@ -32,7 +32,7 @@ pas fait -> language
 
 ## Questions
 * % de prod par manufactureur
-* médiane des review
+* médiane des reviews
 * Pourcentage des reviews 
   * Par tranche de note
   * Par manufactureur
@@ -63,3 +63,4 @@ Autre
 - Number of products by manufacturer [Bastien] -> pas ouf
 - Number of review by category [Bastien]
 - avg Price by category [Bastien]
+- 
