@@ -62,8 +62,8 @@ try:
     WHERE amazon_category_and_sub_category !='NaN'
     GROUP BY amazon_category_and_sub_category
     ORDER BY count(number_of_reviews) desc;
-
     ''',con=co)
+
     print(reviewCategori)
     fig2 = reviewCategori.plot(x='amazon_category_and_sub_category', y='reviews', kind='bar') #Generation du graphique
     fig2.set_xlim(0,10)
@@ -82,6 +82,7 @@ try:
 
     ORDER BY avg(average_review_rating) desc;
     ''',con=co)
+
     print(priceCat)
     fig3 = priceCat.plot(x='amazon_category_and_sub_category', y='avrg', kind='bar') #Generation du graphique
     fig3.set_xlim(142,160)
@@ -132,6 +133,22 @@ try:
     x=["info non renseigné","info renseigné"]
     y=[productInfo['note where info BAD'][0],productInfo['note where info GOOD'][0]]
     plt.title("Moyenne des note en fonction des informations renseignée")
+    plt.bar(x, y)
+    plt.show()
+
+    batteryRequired=pd.read_sql('''
+    SELECT ROUND(AVG(a.average_review_rating),2) as "avg product note noyes", (SELECT ROUND(AVG(a.average_review_rating),2) as "avg product note nono"
+    FROM detail d, amazon a
+    WHERE d.battery_included = 'No' and d.battery_required = 'Yes' and a.uniq_id = d.uniq_id and a.average_review_rating!='Nan')
+    FROM detail d, amazon a
+    WHERE d.battery_included = 'Yes' and d.battery_required = 'Yes' and a.uniq_id = d.uniq_id and a.average_review_rating!='Nan';
+    ''',con=co)
+
+    print(batteryRequired)
+
+    x=["battery included","battery not included"]
+    y=[batteryRequired['avg product note noyes'][0],batteryRequired['avg product note nono'][0]]
+    plt.title("Moyenne des note en fonction de si les batterie sont incluse")
     plt.bar(x, y)
     plt.show()
 
