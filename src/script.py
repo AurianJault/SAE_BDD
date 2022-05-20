@@ -92,6 +92,13 @@ df2['available'] = vardat
 # save cleaned dataframe into csv file
 df2.to_csv("./amazon_clean.csv")
 
+#print(df2['average_review_rating'].describe())
+
+row=["weight","dimension","assembly","recommended_age"]
+
+for col in row:
+    print(df2[col].isnull().sum()/100)
+
 co=None
 try:
     # Connexion à la base
