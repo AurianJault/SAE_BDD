@@ -104,7 +104,7 @@ try:
     # fig3.set_xlim(0,10)
     # plt.show () #Affichage
 
- datafr210 = pd.read_sql ('''select a.amazon_category_and_sub_category, d.recommended_age
+    datafr210 = pd.read_sql ('''select a.amazon_category_and_sub_category, d.recommended_age
     from amazon a, detail d
     where a.uniq_id=d.uniq_id and recommended_age<=10; ''', con=co)
     
@@ -131,7 +131,7 @@ try:
     
     print(datafr213)
     
-    fig213=datafr.plot(x='cat' , y=['battery_required','battery_not_required'] ,legend =False,kind='bar')
+    fig213=datafr213.plot(x='cat' , y=['battery_required','battery_not_required'] ,legend =False,kind='bar')
     fig213.set_title('Moyennes des note du produit')
     fig213.set_xlabel('batterie and not')
     fig213.set_ylabel('Moyenne ')
