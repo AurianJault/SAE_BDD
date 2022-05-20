@@ -106,6 +106,7 @@ try:
     HAVING avg(average_review_rating)!='NaN'
     ORDER BY avg(number_of_reviews) desc
     ''',con=co)
+
     print(ratCat)
     fig4 = ratCat.plot(x='amazon_category_and_sub_category', y='rat', kind='bar') #Generation du graphique
     fig4.set_xlim(0,30)
@@ -146,6 +147,85 @@ try:
     fig6.set_xlabel('Category')
     fig6.set_ylabel('Average review rate')
     plt.show () #Affichage
+
+
+    datafr210 = pd.read_sql ('''select a.amazon_category_and_sub_category, d.recommended_age
+    from amazon a, detail d
+    where a.uniq_id=d.uniq_id and recommended_age<=10; ''', con=co)
+    
+    datafr211 = pd.read_sql ('''select avg(average_review_rating)
+    FRom amazon 
+    group by amazon_category_and_sub_category like 'Hobbies > Model Trains & Railway Sets > Rail Vehicles > Trains'; ''', con=co)
+    
+    datafr212 = pd.read_sql ('''select avg(recommended_age) as Moyenne ,max(recommended_age) as Max ,min(recommended_age) as Min
+    from detail where recommended_age !='NaN' and assembly = 'Yes'; ''', con=co)
+
+    datafr213 = pd.read_sql ('''select avg(a.average_review_rating) battery_required, avg(b.average_review_rating) battery_not_required, b.amazon_category_and_sub_category cat
+    from amazon a ,detail d, amazon b, detail e
+    where a.uniq_id=d.uniq_id and d.battery_required like 'Yes' and b.uniq_id=e.uniq_id and e.battery_required like 'No' and a.average_review_rating!='NaN'
+    and b.average_review_rating!='NaN' and b.amazon_category_and_sub_category like 'Hobbies > Model Trains & Railway Sets > Rail Vehicles > Trains' 
+    and a.amazon_category_and_sub_category like 'Hobbies > Model Trains & Railway Sets > Rail Vehicles > Trains'
+    GROUP BY b.amazon_category_and_sub_category; ''', con=co)
+    
+    print(datafr210)
+    print(datafr211)
+    print(datafr212)
+    
+    print(datafr213)
+    
+    fig213=datafr213.plot(x='cat' , y=['battery_required','battery_not_required'] ,legend =False,kind='bar')
+    fig213.set_title("Average of products'rates")
+    fig213.set_xlabel('batterie and not')
+    fig213.set_ylabel('Average')
+    fig213.set_ylim(4,5)
+    plt.show()
+
+    # Calcul médian
+    
+    curs.execute('''
+    Create OR REPLACE function listeprix(manu amazon.manufacturer%TYPE)
+    returns table(price Amazon.price%TYPE) as $$
+    begin
+        RETURN QUERY SELECT a.price
+        FROM amazon a
+        WHERE a.manufacturer=manu;
+    END;
+$$ language plpgsql;
+
+Create OR REPLACE function listemanu()
+    returns  table(manufacturer Amazon.manufacturer%TYPE) as $$
+    begin
+        return query SELECT DISTINCT a.manufacturer
+        FROM amazon a
+        WHERE a.price!='NaN';
+    END;
+$$ language plpgsql;
+    ''',)
+    man=pd.read_sql('''
+    SELECT listemanu();
+    ''',con=co)
+    compteur=0
+    final=[]
+    nom=[]
+    for i in man["listemanu"]:
+        liste=[]
+        compteur+=1
+        if compteur==11:
+            break
+        nom.append(i)
+        string="SELECT listeprix(\'"+i+"\');"
+        string=string.replace("[a-z]\'","\'\'")
+        res=pd.read_sql(string,con=co)
+        liste=res["listeprix"].values.tolist()
+        liste.sort()
+        mediane=liste[len(liste)//2]
+        final.append(mediane)
+    
+    coucou=plt.bar(nom,final)
+    plt.set_title("Price manufacturers' median")
+    plt.xlabel("Manufacturer")
+    plt.ylabel("Price median")
+    plt.show()
 
 
 

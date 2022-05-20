@@ -65,4 +65,5 @@ Autre
 - Number of review by category [Bastien]
 - Avg Price by category sort by rates [Bastien]
 - Most reviewed products by recommanded age [Bastien] link with billel reco cat 4 age
-- 
+- avg Price by category [Bastien]
+- Price manufacturer's median [Aurian]
