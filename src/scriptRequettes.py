@@ -2,6 +2,7 @@ import pandas as pd
 import psycopg2 as psy
 import getpass
 import matplotlib.pyplot as plt
+import numpy as np
 
 co=None
 try:
@@ -104,14 +105,35 @@ try:
     # fig3.set_xlim(0,10)
     # plt.show () #Affichage
 
+    releaseDate=pd.read_sql('''
+    SELECT EXTRACT(YEAR FROM launch_date) dy, EXTRACT(MONTH FROM launch_date) dm, count(launch_date) count
+    from detail
+    where launch_date is not null
+    group by EXTRACT(YEAR FROM launch_date), EXTRACT(MONTH FROM launch_date)
+    having EXTRACT(YEAR from launch_date) = '2015'
+    order by EXTRACT(YEAR FROM launch_date) asc,  EXTRACT(MONTH FROM launch_date) asc;
+    ''',con=co)
+
+    # dateCurve2015 = releaseDate.plot(x='dm', y='count')
+    # plt.title("Product release evolution in 2015")
+    # plt.show()
+
+    productInfo=pd.read_sql('''
+    SELECT ROUND(avg(a.average_review_rating),2) as "note where info BAD", (SELECT ROUND(avg(a.average_review_rating),2) as "note where info GOOD"
+    FROM detail d, amazon a
+    WHERE d.weight!='NaN' and d.dimension!='NaN' and d.recommended_age!='NaN' and d.uniq_id=a.uniq_id and a.average_review_rating!='NaN')
+    FROM detail d, amazon a
+    WHERE d.weight='NaN' and d.dimension='NaN' and d.assembly='NaN' and d.recommended_age='NaN' and d.uniq_id=a.uniq_id;
+    ''',con=co)
+
+    # x=["info non renseigné","info renseigné"]
+    # y=[productInfo['note where info BAD'][0],productInfo['note where info GOOD'][0]]
+    # plt.title("Moyenne des note en fonction des informations renseignée")
+    # plt.bar(x, y)
+    # plt.show()
 
 
 
-    curs.execute('''
-    SELECT max(a.prix) max, min(a.prix) min
-    FROM amazon a
-    GROUP BY a.manufacturer
-    ''')
 #Fermeture    
     #co.commit()
     curs.close()
