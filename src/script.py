@@ -96,12 +96,12 @@ df2.to_csv("./amazon_clean.csv")
 #print(df2['average_review_rating'].describe())
 row=["weight","dimension","assembly","recommended_age","launch_date"]
 
-for col in row:
-    print(df2[col].isnull().sum()/100)
+# for col in row:
+#     print(df2[col].isnull().sum()/100)
 
 df2['launch_date']=pd.to_datetime(df2['launch_date'])
 
-df2 = df2.replace({np.NaN: None})
+df2['launch_date']=df2['launch_date'].replace({np.NaN: None})
 
 co=None
 try:
