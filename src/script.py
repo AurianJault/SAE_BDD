@@ -2,6 +2,7 @@ import pandas as pd
 import psycopg2 as psy
 import getpass
 import matplotlib.pyplot as plt
+import numpy as np
 
 data = pd.read_csv(r'src/amazon.csv',usecols=["uniq_id","product_name","manufacturer","price","number_available_in_stock","number_of_reviews","number_of_answered_questions","average_review_rating","amazon_category_and_sub_category","product_information"] ,low_memory=False)
 df = pd.DataFrame(data)
@@ -87,17 +88,21 @@ vardat=df2['product_information'].str.split('Date First Available')
 vardat=vardat.str.get(1)
 vardat=vardat.str.split()
 vardat=vardat.str.get(0)+" "+vardat.str.get(1)+" "+vardat.str.get(2)
-df2['available'] = vardat
+df2['launch_date'] = vardat
 
 # save cleaned dataframe into csv file
 df2.to_csv("./amazon_clean.csv")
 
 #print(df2['average_review_rating'].describe())
 
-row=["weight","dimension","assembly","recommended_age"]
+row=["weight","dimension","assembly","recommended_age","launch_date"]
 
 for col in row:
     print(df2[col].isnull().sum()/100)
+
+df2['launch_date']=pd.to_datetime(df2['launch_date'])
+
+df2 = df2.replace({np.NaN: None})
 
 co=None
 try:
@@ -130,7 +135,8 @@ try:
                     assembly varchar(3),
                     battery_included varchar(3),
                     battery_required varchar(3),
-                    recommended_age numeric(3)
+                    recommended_age numeric(3),
+                    launch_date date
                     -- langage varchar(30)
                 );''')                
 
@@ -139,8 +145,8 @@ try:
             (row.uniq_id ,row.product_name ,row.manufacturer ,row.price ,row.number_available_in_stock ,row.stock_status, row.number_of_reviews, row.number_of_answered_questions ,row.average_review_rating ,row.amazon_category_and_sub_category))
 
     for row in df2.itertuples():
-        curs. execute('''INSERT INTO detail VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s);''',
-            (row.uniq_id ,row.weight ,row.dimension ,row.assembly ,row.battery_included ,row.battery_required ,row.recommended_age))
+        curs. execute('''INSERT INTO detail VALUES (%s ,%s ,%s ,%s ,%s ,%s ,%s, %s);''',
+            (row.uniq_id ,row.weight ,row.dimension ,row.assembly ,row.battery_included ,row.battery_required ,row.recommended_age, row.launch_date))
 
 
 #Fermeture    
