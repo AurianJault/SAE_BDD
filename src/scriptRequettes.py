@@ -105,13 +105,54 @@ try:
     # plt.show () #Affichage
 
 
-
-
+    # Calcul médian
+    
     curs.execute('''
-    SELECT max(a.prix) max, min(a.prix) min
-    FROM amazon a
-    GROUP BY a.manufacturer
-    ''')
+    Create OR REPLACE function listeprix(manu amazon.manufacturer%TYPE)
+    returns table(price Amazon.price%TYPE) as $$
+    begin
+        RETURN QUERY SELECT a.price
+        FROM amazon a
+        WHERE a.manufacturer=manu;
+    END;
+$$ language plpgsql;
+
+Create OR REPLACE function listemanu()
+    returns  table(manufacturer Amazon.manufacturer%TYPE) as $$
+    begin
+        return query SELECT DISTINCT a.manufacturer
+        FROM amazon a
+        WHERE a.price!='NaN';
+    END;
+$$ language plpgsql;
+    ''',)
+    man=pd.read_sql('''
+    SELECT listemanu();
+    ''',con=co)
+    compteur=0
+    final=[]
+    nom=[]
+    for i in man["listemanu"]:
+        liste=[]
+        compteur+=1
+        if compteur==11:
+            break
+        nom.append(i)
+        string="SELECT listeprix(\'"+i+"\');"
+        string=string.replace("[a-z]\'","\'\'")
+        res=pd.read_sql(string,con=co)
+        liste=res["listeprix"].values.tolist()
+        liste.sort()
+        mediane=liste[len(liste)//2]
+        final.append(mediane)
+    
+    coucou=plt.bar(nom,final)
+    plt.xlabel("Nom des manufacturer")
+    plt.ylabel("Médiane des prix")
+    plt.show()
+
+
+
 #Fermeture    
     #co.commit()
     curs.close()
