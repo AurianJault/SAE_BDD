@@ -60,7 +60,9 @@ Autre
 
 ## Query
 - Better note if battery is included when required [Rémi]
-- Number of products by manufacturer [Bastien] -> pas ouf
+- Number of different products by a manufacturer [Bastien]
+- Number of products available by manufacturer [Bastien] -> pas ouf
 - Number of review by category [Bastien]
-- avg Price by category [Bastien]
+- Avg Price by category sort by rates [Bastien]
+- Most reviewed products by recommanded age [Bastien] link with billel reco cat 4 age
 - 
