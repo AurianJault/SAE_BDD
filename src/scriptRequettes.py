@@ -30,6 +30,11 @@ try:
         FROM amazon a)p;
     ''')
 
+    curs.execute('''
+    SELECT max(a.prix) max, min(a.prix) min
+    FROM amazon a
+    GROUP BY a.manufacturer
+    ''')
 #Fermeture    
     #co.commit()
     curs.close()

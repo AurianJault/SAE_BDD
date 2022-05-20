@@ -41,14 +41,11 @@ language
 ## Questions
 
 * % de prod par manufactureur
-* médiane des review
+* médiane des reviews
 * Pourcentage des reviews 
   * Par tranche de note
   * Par manufactureur
   * Par catégorie
-* Proba qu'un client achète apres avoir vu la review
-* % d'article avec dans la desc "Best"
-* Stats relation entre vente et reponse aux questions
 * prix max/min par catégories
 * prix max/min par manufactureurs
 
