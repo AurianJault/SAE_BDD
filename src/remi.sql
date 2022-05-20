@@ -19,12 +19,15 @@ from detail
 where weight='NaN';
 */
 
-SELECT COUNT(a.average_review_rating), ROUND(avg(a.average_review_rating),2) as "note where info BAD"
+SELECT ROUND(avg(a.average_review_rating),2) as "note where info BAD", (SELECT ROUND(avg(a.average_review_rating),2) as "note where info GOOD"
+FROM detail d, amazon a
+WHERE d.weight!='NaN' and d.dimension!='NaN' and d.recommended_age!='NaN' and d.uniq_id=a.uniq_id and a.average_review_rating!='NaN')
 FROM detail d, amazon a
 WHERE d.weight='NaN' and d.dimension='NaN' and d.assembly='NaN' and d.recommended_age='NaN' and d.uniq_id=a.uniq_id;
 
-SELECT COUNT(a.average_review_rating), ROUND(avg(a.average_review_rating),2) as "note where info GOOD"
-FROM detail d, amazon a
-WHERE d.weight!='NaN' and d.dimension!='NaN' and d.recommended_age!='NaN' and d.uniq_id=a.uniq_id and a.average_review_rating!='NaN';
-
-SELECT launch_date from detail; 
+SELECT EXTRACT(YEAR FROM launch_date) dy, EXTRACT(MONTH FROM launch_date) dm ,count(launch_date) count 
+from detail
+where launch_date is not null
+group by EXTRACT(YEAR FROM launch_date), EXTRACT(MONTH FROM launch_date)
+having EXTRACT(YEAR from launch_date) = '2015'
+order by EXTRACT(YEAR FROM launch_date) asc,  EXTRACT(MONTH FROM launch_date) asc; 
