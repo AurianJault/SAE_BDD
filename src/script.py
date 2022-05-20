@@ -39,16 +39,7 @@ varPoid=df2['product_information'].str.split('Weight')
 varPoid=varPoid.str.get(1)
 varPoid=varPoid.str.split()
 varPoid=varPoid.str.get(0)+varPoid.str.get(1)
-varPoid=varPoid.str.split('g').str.get(0)
-varPoid=varPoid.str.split('K').str.get(0)
 df2['weight'] = varPoid
-
-# ### WEIGHT UNIT
-# varw=varPoid.str.get(0)+varPoid.str.get(1)
-# varw=varw.str.split('(\d+)([A-Za-z]+)').str.get(0)
-# print("haha\n",varw)
-# df2['weight'] = varw
-
 
 ### DIMENSIONS
 vardim=df2['product_information'].str.split('Product Dimensions')
@@ -111,7 +102,7 @@ for col in row:
 
 df2['launch_date']=pd.to_datetime(df2['launch_date'])
 
-df2['launch_date'] = df2['launch_date'].replace({np.NaN: None})
+df2 = df2.replace({np.NaN: None})
 
 co=None
 try:
