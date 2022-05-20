@@ -94,7 +94,6 @@ df2['launch_date'] = vardat
 df2.to_csv("./amazon_clean.csv")
 
 #print(df2['average_review_rating'].describe())
-
 row=["weight","dimension","assembly","recommended_age","launch_date"]
 
 for col in row:
