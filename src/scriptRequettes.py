@@ -15,8 +15,7 @@ try:
     curs=co.cursor()
 
 
-    #Number of different products by a manufacturer
-
+    ##### Number of different products by a manufacturer
     nbP= pd.read_sql('''
     SELECT count(uniq_id) as p, avg(average_review_rating) rat, manufacturer
     FROM amazon
@@ -24,8 +23,7 @@ try:
     GROUP BY manufacturer
     ORDER BY count(uniq_id) desc, avg(average_review_rating) desc;
     ''',con=co)
-    # 
-    print(nbP)
+
     dataSet=nbP
     fig0, f1= plt.subplots() #Generation du graphique
     x=nbP.manufacturer
@@ -42,8 +40,7 @@ try:
     f.set_title('TOP 10 - Number of different products by manufacter with the average rating for each manufacturer')
     plt.show() #Affichage
 
-    #NAZE
-    #nb prod dispo par manufacturer
+    ##### nb prod dispo par manufacturer
     okkkk= pd.read_sql('''
     SELECT sum(number_available_in_stock) as produits, avg(average_review_rating) rat, manufacturer
     FROM amazon
@@ -55,7 +52,7 @@ try:
     # fig1. set_ylim (0,50)
     # plt.show () #Affichage
 
-    #Number of review by category 
+    ##### Number of review by category 
     reviewCategori= pd.read_sql('''
     SELECT count(number_of_reviews) as reviews , amazon_category_and_sub_category
     FROM amazon
@@ -72,7 +69,7 @@ try:
     fig2.set_title('TOP 10 - Number of review by category ')
     plt.show () #Affichage
 
-    #Avg Price by category sort by rates
+    ##### Avg Price by category sort by rates
     priceCat=pd.read_sql('''
     SELECT avg(price) avrg, amazon_category_and_sub_category, avg(average_review_rating) avg
     FROM amazon
@@ -91,8 +88,7 @@ try:
     fig3.set_title('TOP 10 - Price by category order by the best average rates')
     plt.show () #Affichage
 
-    #Bof
-    #Average review rating by category order by the most  
+    ##### Average review rating by category order by the most  
     ratCat=pd.read_sql('''
     SELECT avg(average_review_rating) rat, amazon_category_and_sub_category, avg(number_of_reviews)
     FROM amazon
@@ -109,6 +105,7 @@ try:
     fig4.set_xlabel('Category')
     plt.show () #Affichage
 
+    ##### Evoluion of products releases in 2015
     releaseDate=pd.read_sql('''
     SELECT EXTRACT(YEAR FROM launch_date) dy, EXTRACT(MONTH FROM launch_date) dm, count(launch_date) count
     from detail
@@ -119,9 +116,12 @@ try:
     ''',con=co)
 
     dateCurve2015 = releaseDate.plot(x='dm', y='count')
-    plt.title("Product release evolution in 2015")
+    plt.title("Evoluion of products releases in 2015")
+    plt.xlabel("Months")
+    plt.ylabel("Number of products released")
     plt.show()
 
+    ##### Average reviews based on the presence of products informations
     productInfo=pd.read_sql('''
     SELECT ROUND(avg(a.average_review_rating),2) as "note where info BAD", (SELECT ROUND(avg(a.average_review_rating),2) as "note where info GOOD"
     FROM detail d, amazon a
@@ -130,12 +130,15 @@ try:
     WHERE d.weight='NaN' and d.dimension='NaN' and d.assembly='NaN' and d.recommended_age='NaN' and d.uniq_id=a.uniq_id;
     ''',con=co)
 
-    x=["info non renseigné","info renseigné"]
+    x=["informations not filled in","informations filled in"]
     y=[productInfo['note where info BAD'][0],productInfo['note where info GOOD'][0]]
-    plt.title("Moyenne des note en fonction des informations renseignée")
+    plt.title("Average reviews based on the presence of products informations")
+    plt.xlabel("Informations")
+    plt.ylabel("Average Reviews")
     plt.bar(x, y)
     plt.show()
 
+    ##### Average reviews based on the inclusions of batteries
     batteryRequired=pd.read_sql('''
     SELECT ROUND(AVG(a.average_review_rating),2) as "avg product note noyes", (SELECT ROUND(AVG(a.average_review_rating),2) as "avg product note nono"
     FROM detail d, amazon a
@@ -144,15 +147,15 @@ try:
     WHERE d.battery_included = 'Yes' and d.battery_required = 'Yes' and a.uniq_id = d.uniq_id and a.average_review_rating!='Nan';
     ''',con=co)
 
-    print(batteryRequired)
-
-    x=["battery included","battery not included"]
+    x=["batteries included","batteries not included"]
     y=[batteryRequired['avg product note noyes'][0],batteryRequired['avg product note nono'][0]]
-    plt.title("Moyenne des note en fonction de si les batterie sont incluse")
+    plt.title("Average reviews based on the inclusions of batteries")
+    plt.xlabel("Informations")
+    plt.ylabel("Average Reviews")
     plt.bar(x, y)
     plt.show()
 
-    #Most reviewed products by recommanded age
+    ##### Most reviewed products by recommanded age
     ageB=pd.read_sql('''
     SELECT avg(a.number_of_reviews) avg, d.recommended_age age
     FROM amazon a, detail d 
@@ -168,7 +171,7 @@ try:
     fig5.set_ylabel('Review')
     plt.show () #Affichage
 
-    #Moyenne des notes par catégorie qd produits monté ou non 
+    ##### Moyenne des notes par catégorie qd produits monté ou non 
     notAss=pd.read_sql('''
     SELECT avg(a.average_review_rating) assembled, avg(a1.average_review_rating) not_assembled, a.amazon_category_and_sub_category cat
     FROM amazon a, detail d, amazon a1, detail d1
@@ -205,7 +208,6 @@ try:
     print(datafr210)
     print(datafr211)
     print(datafr212)
-    
     print(datafr213)
     
     fig213=datafr213.plot(x='cat' , y=['battery_required','battery_not_required'] ,legend =False,kind='bar')
@@ -215,8 +217,7 @@ try:
     fig213.set_ylim(4,5)
     plt.show()
 
-    # Calcul médian
-    
+    ##### Calcul médian
     curs.execute('''
     Create OR REPLACE function listeprix(manu amazon.manufacturer%TYPE)
     returns table(price Amazon.price%TYPE) as $$
