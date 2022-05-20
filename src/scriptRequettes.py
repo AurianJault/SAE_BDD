@@ -180,24 +180,28 @@ try:
     HAVING avg(a.average_review_rating)!='NaN' and avg(a1.average_review_rating)!='NaN'
     FETCH FIRST 10 ROWS ONLY
     ''',con=co)
-    print(notAss)
+
     fig6 = notAss.plot(x='cat', y=['assembled','not_assembled'], kind='bar') #Generation du graphique
     fig6.set_title('Average rates by category for essembly products or not')
     fig6.set_xlabel('Category')
     fig6.set_ylabel('Average review rate')
     plt.show () #Affichage
 
+    ##### Categories which contains products with recommended_age<=10
     datafr210 = pd.read_sql ('''select a.amazon_category_and_sub_category, d.recommended_age
     from amazon a, detail d
     where a.uniq_id=d.uniq_id and recommended_age<=10; ''', con=co)
     
+    ##### Average review for Train category
     datafr211 = pd.read_sql ('''select avg(average_review_rating)
     FRom amazon 
     group by amazon_category_and_sub_category like 'Hobbies > Model Trains & Railway Sets > Rail Vehicles > Trains'; ''', con=co)
     
+    ##### Average, Max and Min recommended age for products that have assembly needed
     datafr212 = pd.read_sql ('''select avg(recommended_age) as Moyenne ,max(recommended_age) as Max ,min(recommended_age) as Min
     from detail where recommended_age !='NaN' and assembly = 'Yes'; ''', con=co)
 
+    ##### Average reviwes on products in Trains category that have battery_required or not
     datafr213 = pd.read_sql ('''select avg(a.average_review_rating) battery_required, avg(b.average_review_rating) battery_not_required, b.amazon_category_and_sub_category cat
     from amazon a ,detail d, amazon b, detail e
     where a.uniq_id=d.uniq_id and d.battery_required like 'Yes' and b.uniq_id=e.uniq_id and e.battery_required like 'No' and a.average_review_rating!='NaN'
